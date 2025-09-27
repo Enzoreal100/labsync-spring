@@ -13,7 +13,7 @@ import com.dto.TakeDTO;
 import com.service.StockService;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
@@ -36,7 +36,7 @@ public class StockController {
 
     @PostMapping("/take")
     @Operation(summary = "take items from stock", description = "take a batch of items from the stock")
-    public ResponseEntity<?> takeItemsFromStock(@RequestBody @Valid List<TakeDTO> batch) {
+    public ResponseEntity<?> takeItemsFromStock(@org.springframework.web.bind.annotation.RequestBody @Valid List<TakeDTO> batch) {
         return ResponseEntity.ok(stockService.takeItemsFromStock(batch));
     }
 }
