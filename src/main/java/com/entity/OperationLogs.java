@@ -2,9 +2,7 @@ package com.entity;
 
 import com.dto.ItemsLog;
 import jakarta.persistence.*;
-
 import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "operation_logs")
