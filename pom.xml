@@ -62,6 +62,11 @@
     		<groupId>org.springframework.boot</groupId>
     		<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>9.16.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -70,7 +75,15 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>com.github.vlsi.gradle</groupId>
+				<artifactId>jpa-schema-maven-plugin</artifactId>
+				<version>1.0.3</version>
+				<configuration>
+					<action>CREATE</action>
+					<outputFile>${project.build.directory}/schema.sql</outputFile>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>
