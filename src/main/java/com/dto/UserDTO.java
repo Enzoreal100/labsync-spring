@@ -1,10 +1,23 @@
 package com.dto;
 
+import jakarta.validation.constraints.*;
+
 public class UserDTO {
-    private int id;
-    private int lab;
-    private int position;
+
+    @Min(value = 0, message = "ID deve ser um número inteiro e positivo")
+    private Integer id;
+
+    @Min(value = 0, message = "Lab deve ser um número inteiro e positivo")
+    private Integer lab;
+
+    @Min(value = 1, message = "Position deve ser entre 1 e 3")
+    @Max(value = 3, message = "Position deve ser entre 1 e 3")
+    private Integer position;
+
+    @NotBlank(message = "Name não pode estar vazio")
     private String name;
+
+    @Pattern(regexp = "^[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}$", message = "Card code deve estar no formato XX-XX-XX-XX-XX")
     private String cardCode;
 
     public UserDTO() {}
@@ -16,7 +29,7 @@ public class UserDTO {
         this.position = position;
     }
 
-    public UserDTO(int id, int lab, int position, String name, String cardCode) {
+    public UserDTO(int id, String name, int position, int lab, String cardCode) {
         this.id = id;
         this.lab = lab;
         this.position = position;

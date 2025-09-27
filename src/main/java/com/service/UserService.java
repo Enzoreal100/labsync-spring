@@ -9,6 +9,7 @@ import com.repository.PositionRepository;
 import com.repository.LabRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +20,10 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private PositionRepository positionRepository;
-    
+
     @Autowired
     private LabRepository labRepository;
 
@@ -37,6 +38,7 @@ public class UserService {
                 .map(this::convertToDTO);
     }
 
+    @Transactional
     public UserDTO createUser(UserDTO userDTO){
         User user = convertFromDTO(userDTO);
         User savedUser = userRepository.save(user);
@@ -44,7 +46,8 @@ public class UserService {
     }
 
     private UserDTO convertToDTO(User user) {
-        return new UserDTO(user.getId(), user.getName(), user.getPosition().getId(), user.getLab().getId());
+        UserDTO newUserDTO = new UserDTO(user.getId(), user.getName(), user.getPosition().getId(), user.getLab().getId(), user.getCardCode());
+        return newUserDTO;
     }
 
     private User convertFromDTO(UserDTO user){
