@@ -9,7 +9,7 @@ public class ItemsLog {
     public ItemsLog() {
     }
 
-    public ItemsLog(String itemEanCode, String itemName, int quantity) {
+    public ItemsLog(String itemEanCode, String itemName, String opperationType, int quantity) {
         this.itemEanCode = itemEanCode;
         this.itemName = itemName;
         this.opperationType = opperationType;
