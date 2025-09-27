@@ -21,6 +21,9 @@ public class Lab {
     @OneToMany(mappedBy = "lab")
     private List<User> users;
 
+    @OneToMany(mappedBy = "lab")
+    private List<Stock> stocks;
+
     public Lab(int id, String name, String address, List<User> users) {
         this.id = id;
         this.name = name;

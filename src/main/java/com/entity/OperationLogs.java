@@ -1,8 +1,10 @@
 package com.entity;
 
+import com.dto.ItemsLog;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "operation_logs")
@@ -11,7 +13,7 @@ public class OperationLogs {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -19,5 +21,8 @@ public class OperationLogs {
     private String operationType;
 
     @Column
-    private ArrayList<Item> items;
+    private ArrayList<ItemsLog> item;
+
+    @Column
+    private int quantity;
 }

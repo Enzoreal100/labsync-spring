@@ -9,8 +9,6 @@ import java.util.List;
 public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    @Column(nullable = false)
     private int id;
 
     @Column(nullable = false)

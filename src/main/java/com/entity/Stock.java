@@ -11,7 +11,7 @@ public class Stock {
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "eanCode_item")
+    @JoinColumn(name = "item_ean")
     private Item item;
 
     @Column

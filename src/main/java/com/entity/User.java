@@ -10,35 +10,29 @@ public class User {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @OneToMany(mappedBy = "user")
     private int id;
     
     @Column(nullable = false)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "position_id", referencedColumnName = "id")
-    @Column(nullable = false)
+    @JoinColumn(name = "position_id")
     private Position position;
 
     @Column(nullable = false, unique = true)
     private Timestamp creationDate = new Timestamp(System.currentTimeMillis());
 
     @ManyToOne
-    @JoinColumn(name = "lab_id", referencedColumnName = "id")
-    @Column(nullable = false)
-    private int lab;
+    @JoinColumn(name = "lab_id")
+    private Lab lab;
 
     @Column(nullable = false, unique = true)
     private String cardCode;
 
-    public User(Timestamp creationDate, Position position, String name, int id, int lab, String cardCode)
-    {
-        this.id = id;
-        this.lab = lab;
-        this.creationDate = creationDate;
-        this.position = position;
+    public User(String name, Position position, Lab lab, String cardCode) {
         this.name = name;
+        this.position = position;
+        this.lab = lab;
         this.cardCode = cardCode;
     }
 
@@ -76,15 +70,16 @@ public class User {
         this.creationDate = creationDate;
     }
 
-    public int getLab() {
+    public Lab getLab() {
         return lab;
     }
 
-    public void setLab(int lab) {
+    public void setLab(Lab lab) {
         this.lab = lab;
     }
 
     public String getCardCode() { return cardCode; }
 
     public void setCardCode(String cardCode) { this.cardCode = cardCode; }
+
 }
