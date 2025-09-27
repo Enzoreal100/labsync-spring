@@ -1,0 +1,4 @@
+CREATE TABLE item (
+    eanCode VARCHAR2(255) PRIMARY KEY,
+    name VARCHAR2(255)
+);
