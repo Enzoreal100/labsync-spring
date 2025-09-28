@@ -1,8 +1,6 @@
 package com.service;
 
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dto.StockDTO;
@@ -18,10 +16,6 @@ public class StockService {
 
     public List<StockDTO> getAllItems(int labId){
         return stockRepository.findAllByLabId(labId);
-    }
-
-    public Optional<StockDTO> getStockByEanCodeAndLabId(String eanCode, int labId) {
-        return stockRepository.findDtoByEanCodeAndLabId(eanCode, labId);
     }
 
     public List<TakeDTO> takeItemsFromStock(List<TakeDTO> batch){
