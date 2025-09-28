@@ -16,7 +16,4 @@ public interface StockRepository extends JpaRepository<Stock, Long>{
     List<StockDTO> findAllByLabId(@Param("labId") int labId);
     
     Optional<Stock> findById(@Param("id") int id);
-
-    @Query("SELECT new com.dto.StockDTO(s.id, i.eanCode, i.name, s.quantity, s.minQuantity, s.lab.id) FROM Stock s JOIN s.item i WHERE i.eanCode = :eanCode AND s.lab.id = :labId")
-    Optional<StockDTO> findDtoByEanCodeAndLabId(@Param("eanCode") String eanCode, @Param("labId") int labId);
 }
