@@ -2,9 +2,9 @@ package com.dto;
 
 public class WebSocketSuccessPayload {
     private String status = "SUCCESS";
-    private UserDTO data;
+    private Object data;
 
-    public WebSocketSuccessPayload(UserDTO data) {
+    public WebSocketSuccessPayload(Object data) {
         this.data = data;
     }
 
@@ -12,7 +12,7 @@ public class WebSocketSuccessPayload {
         return status;
     }
 
-    public UserDTO getData() {
+    public Object getData() {
         return data;
     }
 }

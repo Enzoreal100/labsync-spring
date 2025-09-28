@@ -1,9 +1,8 @@
 package com.controller;
 
-import com.dto.NfcScanDTO;
-import com.dto.UserDTO;
-import com.dto.WebSocketErrorPayload;
-import com.dto.WebSocketSuccessPayload;
+import jakarta.validation.Valid;
+import com.dto.*;
+import com.service.StockService;
 import com.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,22 +24,46 @@ public class WebhookController {
     private UserService userService;
 
     @Autowired
+    private StockService stockService;
+
+    @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
     @PostMapping("/nfc-scan")
-    public ResponseEntity<Void> handleNfcScan(@RequestBody NfcScanDTO payload, @RequestHeader("API-Key") String apiKey) {
+    public ResponseEntity<Void> handleNfcScan(@Valid @RequestBody NfcScanDTO payload, @RequestHeader("API-Key") String apiKey) {
         if (!validApiKey.equals(apiKey)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
         Optional<UserDTO> userOptional = userService.getUserByCardCode(payload.getCardCode());
 
+        // This implementation sends to a general topic. 
+        // For targeted messages, a labId would be needed in the NfcScanDTO.
         if (userOptional.isEmpty()) {
             messagingTemplate.convertAndSend("/topic/scan-events", new WebSocketErrorPayload("Usuário não encontrado para o cartão fornecido."));
             return ResponseEntity.notFound().build();
         }
 
         messagingTemplate.convertAndSend("/topic/scan-events", new WebSocketSuccessPayload(userOptional.get()));
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/barcode-scan")
+    public ResponseEntity<Void> handleBarcodeScan(@Valid @RequestBody BarcodeScanDTO payload, @RequestHeader("API-Key") String apiKey) {
+        if (!validApiKey.equals(apiKey)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        Optional<StockDTO> stockOptional = stockService.getStockByEanCodeAndLabId(payload.getBarcodeData(), payload.getLabId());
+
+        String topic = "/topic/barcode-scan-events/" + payload.getLabId();
+
+        if (stockOptional.isEmpty()) {
+            messagingTemplate.convertAndSend(topic, new WebSocketErrorPayload("Item não encontrado no estoque deste laboratório."));
+            return ResponseEntity.notFound().build();
+        }
+
+        messagingTemplate.convertAndSend(topic, new WebSocketSuccessPayload(stockOptional.get()));
         return ResponseEntity.ok().build();
     }
 }
