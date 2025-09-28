@@ -26,7 +26,7 @@ public class User {
     @JoinColumn(name = "lab_id")
     private Lab lab;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String cardCode;
 
     public User(String name, Position position, Lab lab, String cardCode) {
