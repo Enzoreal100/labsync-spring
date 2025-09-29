@@ -4,16 +4,18 @@ public class StockDTO {
     private int id;
     private String eanCode;
     private String name;
+    private String imageUrl;
     private int quantity;
     private int minQuantity;
     private int labId;
 
     public StockDTO() {}
 
-    public StockDTO(int id, String eanCode, String name, int quantity, int minQuantity, int labId) {
+    public StockDTO(int id, String eanCode, String name, String imageUrl, int quantity, int minQuantity, int labId) {
         this.id = id;
         this.eanCode = eanCode;
         this.name = name;
+        this.imageUrl = imageUrl;
         this.quantity = quantity;
         this.minQuantity = minQuantity;
         this.labId = labId;
@@ -41,6 +43,14 @@ public class StockDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public int getQuantity() {
