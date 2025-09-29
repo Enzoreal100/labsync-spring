@@ -13,6 +13,9 @@ public class Item {
     @Column
     private String name;
 
+    @Column(nullable = true)
+    private String imageUrl;
+
     @OneToMany(mappedBy = "item")
     private List<Stock> stocks;
 }

@@ -9,7 +9,8 @@ import org.springframework.context.annotation.Bean;
 public class LabsyncApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(LabsyncApplication.class, args);
+
+        SpringApplication.run(LabsyncApplication.class, args);
 	}
 
 	@Bean
