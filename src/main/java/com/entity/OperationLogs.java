@@ -20,7 +20,4 @@ public class OperationLogs {
 
     @Column
     private ArrayList<ItemsLog> item;
-
-    @Column
-    private int quantity;
 }
