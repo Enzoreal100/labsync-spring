@@ -20,4 +20,5 @@ public class OperationLogs {
 
     @Column
     private ArrayList<ItemsLog> item;
+
 }
