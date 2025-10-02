@@ -1,6 +1,8 @@
 package com.dto;
 
-public class ItemsLog {
+import java.io.Serializable;
+
+public class ItemsLog implements Serializable {
     private String itemEanCode;
     private String itemName;
     private String opperationType;

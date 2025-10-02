@@ -19,4 +19,8 @@ public class OperationLogsService {
     public List<OperationLogs> findByIdLab(int idLab){
         return operationLogsRepository.findByUserLabId(idLab);
     }
+
+    public void createLog(OperationLogs log){
+        operationLogsRepository.save(log);
+    }
 }

@@ -34,9 +34,9 @@ public class StockController {
         return ResponseEntity.ok(stockService.getAllItems(labId));
     }
 
-    @PostMapping("/take")
+    @PostMapping("/take/{userId}")
     @Operation(summary = "take items from stock", description = "take a batch of items from the stock")
-    public ResponseEntity<?> takeItemsFromStock(@org.springframework.web.bind.annotation.RequestBody @Valid List<TakeDTO> batch) {
-        return ResponseEntity.ok(stockService.takeItemsFromStock(batch));
+    public ResponseEntity<?> takeItemsFromStock(@org.springframework.web.bind.annotation.RequestBody @Valid List<TakeDTO> batch, @PathVariable int userId ) {
+        return ResponseEntity.ok(stockService.takeItemsFromStock(batch, userId));
     }
 }
