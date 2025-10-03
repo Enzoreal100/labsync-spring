@@ -16,13 +16,13 @@ public class OperationLogsService {
     OperationLogsRepository operationLogsRepository;
 
     public List<OperationLogsDTO> findAll(){
-        return operationLogsRepository.findAll().stream()
+        return operationLogsRepository.findAllOrderByIdDesc().stream()
             .map(this::convertToDTO)
             .collect(Collectors.toList());
     }
 
     public List<OperationLogsDTO> findByIdLab(int idLab){
-        return operationLogsRepository.findByUserLabId(idLab).stream()
+        return operationLogsRepository.findByUserLabIdOrderByIdDesc(idLab).stream()
             .map(this::convertToDTO)
             .collect(Collectors.toList());
     }

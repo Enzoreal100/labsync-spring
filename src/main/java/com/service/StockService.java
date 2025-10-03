@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.dto.ItemsLog;
 import com.dto.StockDTO;
 import com.dto.TakeDTO;
+import com.dto.TakeItemsDTO;
 import com.entity.OperationLogs;
 import com.entity.Stock;
 import com.entity.User;
@@ -29,36 +30,36 @@ public class StockService {
         return stockRepository.findAllByLabId(labId);
     }
 
-    public List<TakeDTO> takeItemsFromStock(List<TakeDTO> batch, int userId){
-        batch.forEach(item -> {
+    public TakeDTO takeItemsFromStock(TakeDTO takeData){
+        takeData.getItems().forEach(item -> {
             Stock stock = stockRepository.findById(item.getId()).get();
             stock.setQuantity(stock.getQuantity() - item.getTakeQuantity());
             stockRepository.save(stock);
         });
-        setTakeLog(batch, userId);
-        return batch;
+        setTakeLog(takeData);
+        return takeData;
     }
 
-    private void setTakeLog(List<TakeDTO> batch, int userId){
-        ArrayList<ItemsLog> items = mapToItemsLog(batch);
-        User user = userService.findById(userId);
+    private void setTakeLog(TakeDTO takeData){
+        ArrayList<ItemsLog> items = mapToItemsLog(takeData.getItems());
+        User user = userService.findById(takeData.getUserId());
         OperationLogs log = new OperationLogs(
             user,
-            "Take", 
-            items);
+            "Take",
+            items
+        );
         operationLogsService.createLog(log);
     }
 
-    private ArrayList<ItemsLog> mapToItemsLog(List<TakeDTO> batch){
+    private ArrayList<ItemsLog> mapToItemsLog(List<TakeItemsDTO> batch){
         ArrayList<ItemsLog> items = new ArrayList<ItemsLog>();
         batch.forEach(item -> {
             Stock stock = stockRepository.findById(item.getId()).get();
             ItemsLog itemLog = new ItemsLog(
                 stock.getItem().getEanCode(),
                 stock.getItem().getName(),
-                "Take",
                 item.getTakeQuantity()
-            ); 
+            );
             items.add(itemLog);
         });
         return items;

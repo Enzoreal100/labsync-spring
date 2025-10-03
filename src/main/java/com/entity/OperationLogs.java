@@ -1,5 +1,6 @@
 package com.entity;
 
+import com.converter.ItemsLogListConverter;
 import com.dto.ItemsLog;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -20,7 +21,8 @@ public class OperationLogs {
     @Column
     private String operationType;
 
-    @Column
+    @Column(columnDefinition = "CLOB")
+    @Convert(converter = ItemsLogListConverter.class)
     private ArrayList<ItemsLog> item;
 
     public OperationLogs() {

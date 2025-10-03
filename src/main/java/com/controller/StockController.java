@@ -1,7 +1,4 @@
 package com.controller;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,9 +31,9 @@ public class StockController {
         return ResponseEntity.ok(stockService.getAllItems(labId));
     }
 
-    @PostMapping("/take/{userId}")
+    @PostMapping("/take")
     @Operation(summary = "take items from stock", description = "take a batch of items from the stock")
-    public ResponseEntity<?> takeItemsFromStock(@org.springframework.web.bind.annotation.RequestBody @Valid List<TakeDTO> batch, @PathVariable int userId ) {
-        return ResponseEntity.ok(stockService.takeItemsFromStock(batch, userId));
+    public ResponseEntity<?> takeItemsFromStock(@org.springframework.web.bind.annotation.RequestBody @Valid TakeDTO takeData) {
+        return ResponseEntity.ok(stockService.takeItemsFromStock(takeData));
     }
 }
