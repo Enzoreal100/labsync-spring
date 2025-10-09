@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -29,11 +31,24 @@ public class User {
     @Column(nullable = false, unique = true)
     private String cardCode;
 
-    public User(String name, Position position, Lab lab, String cardCode) {
+    @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String password_hash;
+
+    @Column(nullable = false)
+    @CreationTimestamp
+    private Timestamp createdAt;
+
+    public User(String name, Position position, Lab lab, String cardCode, String email, String password_hash, Timestamp createdAt) {
         this.name = name;
         this.position = position;
         this.lab = lab;
         this.cardCode = cardCode;
+        this.email = email;
+        this.password_hash = password_hash;
+        this.createdAt = createdAt;
     }
 
     public User() {}
@@ -76,6 +91,30 @@ public class User {
 
     public void setLab(Lab lab) {
         this.lab = lab;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword_hash() {
+        return password_hash;
+    }
+
+    public void setPassword_hash(String password_hash) {
+        this.password_hash = password_hash;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Timestamp createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getCardCode() { return cardCode; }

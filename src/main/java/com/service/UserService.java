@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -57,6 +58,6 @@ public class UserService {
     private User convertFromDTO(UserDTO user){
         Position position = positionRepository.findById(user.getPosition()).orElse(null);
         Lab lab = labRepository.findById(user.getLab());
-        return new User(user.getName(), position, lab, user.getCardCode());
+        return new User(user.getName(), position, lab, user.getCardCode(), user.getEmail(), user.getPassword_hash(), new Timestamp(0));
     }
 }

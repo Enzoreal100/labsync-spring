@@ -5,13 +5,16 @@ import jakarta.validation.constraints.*;
 public class UserDTO {
 
     @Min(value = 0, message = "ID deve ser um número inteiro e positivo")
+    @NotBlank(message = "Name não pode estar vazio")
     private Integer id;
 
     @Min(value = 0, message = "Lab deve ser um número inteiro e positivo")
+    @NotBlank(message = "Name não pode estar vazio")
     private Integer lab;
 
     @Min(value = 1, message = "Position deve ser entre 1 e 3")
     @Max(value = 3, message = "Position deve ser entre 1 e 3")
+    @NotBlank(message = "Name não pode estar vazio")
     private Integer position;
 
     @NotBlank(message = "Name não pode estar vazio")
@@ -19,6 +22,14 @@ public class UserDTO {
 
     @Pattern(regexp = "^[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}$", message = "Card code deve estar no formato XX-XX-XX-XX-XX")
     private String cardCode;
+
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Email deve estar no formato correto")
+    private String email;
+
+    @Size(min = 8, message = "A senha deve ter pelo menos 8 caracteres")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula e um número")
+    private String password_hash;
+
 
     public UserDTO() {}
 
@@ -75,5 +86,21 @@ public class UserDTO {
 
     public void setCardCode(String cardCode) {
         this.cardCode = cardCode;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword_hash() {
+        return password_hash;
+    }
+
+    public void setPassword_hash(String password_hash) {
+        this.password_hash = password_hash;
     }
 }
