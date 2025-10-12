@@ -8,9 +8,11 @@ import com.repository.UserRepository;
 import com.repository.PositionRepository;
 import com.repository.LabRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -45,6 +47,8 @@ public class UserService {
     @Transactional
     public UserDTO createUser(UserDTO userDTO){
         User user = convertFromDTO(userDTO);
+        String hashedPassword = hashPassword(user.getPassword_hash());
+        user.setPassword_hash(hashedPassword);
         User savedUser = userRepository.save(user);
         return convertToDTO(savedUser);
     }
@@ -57,6 +61,11 @@ public class UserService {
     private User convertFromDTO(UserDTO user){
         Position position = positionRepository.findById(user.getPosition()).orElse(null);
         Lab lab = labRepository.findById(user.getLab());
-        return new User(user.getName(), position, lab, user.getCardCode());
+        return new User(user.getName(), position, lab, user.getCardCode(), user.getEmail(), user.getPassword_hash(), new Timestamp(0));
+    }
+
+    private String hashPassword(String passoword){
+        String salt = BCrypt.gensalt();
+        return BCrypt.hashpw(passoword, salt);
     }
 }
