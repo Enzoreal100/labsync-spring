@@ -4,26 +4,30 @@ import jakarta.validation.constraints.*;
 
 public class UserDTO {
 
-    @Min(value = 0, message = "ID deve ser um número inteiro e positivo")
+    @Min(value = 1, message = "ID deve ser um número inteiro e positivo")
     private Integer id;
 
-    @Min(value = 0, message = "Lab deve ser um número inteiro e positivo")
-    // @NotBlank(message = "Name não pode estar vazio")
+    @NotNull(message = "Lab é obrigatório")
+    @Min(value = 1, message = "Lab deve ser um número inteiro e positivo")
     private Integer lab;
 
+    @NotNull(message = "Position é obrigatório")
     @Min(value = 1, message = "Position deve ser entre 1 e 3")
     @Max(value = 3, message = "Position deve ser entre 1 e 3")
     private Integer position;
 
-    @NotBlank(message = "Name não pode estar vazio")
+    @NotBlank(message = "Name é obrigatório e não pode estar vazio")
     private String name;
 
+    @NotBlank(message = "Card code é obrigatório")
     @Pattern(regexp = "^[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}-[A-Z0-9]{2}$", message = "Card code deve estar no formato XX-XX-XX-XX-XX")
     private String cardCode;
 
+    @NotBlank(message = "Email é obrigatório")
     @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "Email deve estar no formato correto")
     private String email;
 
+    @NotBlank(message = "Senha é obrigatória")
     @Size(min = 8, message = "A senha deve ter pelo menos 8 caracteres")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "A senha deve conter pelo menos uma letra maiúscula, uma letra minúscula e um número")
     private String password_hash;
