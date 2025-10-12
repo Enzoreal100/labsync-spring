@@ -5,16 +5,14 @@ import jakarta.validation.constraints.*;
 public class UserDTO {
 
     @Min(value = 0, message = "ID deve ser um número inteiro e positivo")
-    @NotBlank(message = "Name não pode estar vazio")
     private Integer id;
 
     @Min(value = 0, message = "Lab deve ser um número inteiro e positivo")
-    @NotBlank(message = "Name não pode estar vazio")
+    // @NotBlank(message = "Name não pode estar vazio")
     private Integer lab;
 
     @Min(value = 1, message = "Position deve ser entre 1 e 3")
     @Max(value = 3, message = "Position deve ser entre 1 e 3")
-    @NotBlank(message = "Name não pode estar vazio")
     private Integer position;
 
     @NotBlank(message = "Name não pode estar vazio")

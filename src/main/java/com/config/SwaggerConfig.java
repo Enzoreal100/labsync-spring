@@ -16,11 +16,14 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         Server productionServer = new Server();
         productionServer.setUrl("https://homol-labsync.ddns.net");
+
+        Server localHostServer = new Server();
+        localHostServer.setUrl("http://localhost:8080");
         return new OpenAPI()
                 .info(new Info()
                         .title("Labsync API")
                         .version("1.0")
                         .description("API documentation for Labsync application"))
-                    .servers(List.of(productionServer));
+                    .servers(List.of(productionServer, localHostServer));
     }
 }
