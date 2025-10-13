@@ -4,16 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import com.dto.auth.TokenDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.dto.auth.LoginDTO;
 import com.entity.User;
@@ -62,5 +59,15 @@ public class AuthController {
         response.put("token", token);
         
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/refresh")
+    @Operation(summary = "refresh token", description = "refresh the auth token")
+    public ResponseEntity<String> refresh(@AuthenticationPrincipal TokenDTO token){
+        if (token ==  null){
+            System.out.println("CARALHO");
+        }
+        String mockResp = "Sub: " + token.getSub() + "Position: " + token.getPositionId() + "Lab: " + token.getLabId() + "iat: " + token.getIat() + "Exp: " + token.getExp();
+        return ResponseEntity.ok(mockResp);
     }
 }

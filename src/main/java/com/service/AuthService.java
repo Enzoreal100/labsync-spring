@@ -1,5 +1,6 @@
 package com.service;
 
+import com.dto.auth.TokenDTO;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -16,6 +17,7 @@ import com.entity.User;
 import com.repository.UserRepository;
 
 import javax.crypto.SecretKey;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Optional;
 
@@ -70,6 +72,19 @@ public class AuthService {
         return (String) extractClaims(token).get("labName");
     }
 
+    public Date extractIat(String token) { return extractClaims(token).getIssuedAt(); }
+
+    public Date extractExp(String token) { return extractClaims(token).getExpiration(); }
+
+    public TokenDTO extractTokenDetails(String token) {
+        TokenDTO tokenInfo = new TokenDTO();
+        tokenInfo.setSub(extractUserId(token));
+        tokenInfo.setPositionId(extractPositionId(token));
+        tokenInfo.setLabId(extractLabId(token));
+        tokenInfo.setIat(extractIat(token));
+        tokenInfo.setExp(extractExp(token));
+        return tokenInfo;
+    }
     public boolean isTokenValid(String token) {
         try {
             return !isTokenExpired(token);
