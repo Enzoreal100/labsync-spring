@@ -1,6 +1,5 @@
 package com.controller;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,9 +39,17 @@ public class AuthController {
         return errors;
     }
 
-    @PostMapping
+    @PostMapping("/login")
     @Operation(summary = "Login", description = "Login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginDTO loginDTO) {
-        return ResponseEntity.ok("Id:" + loginDTO.getId() + "pw:" + loginDTO.getPassword());
+    public ResponseEntity<Map<String, String>> login(@RequestBody @Valid LoginDTO loginDTO) {
+        // Aqui você validaria as credenciais
+        // Por enquanto, apenas gera o token
+        String token = authService.generateToken(loginDTO.getId());
+        
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+        response.put("userId", loginDTO.getId().toString());
+        
+        return ResponseEntity.ok(response);
     }
 }
