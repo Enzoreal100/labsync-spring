@@ -36,19 +36,7 @@ public class AuthService {
 
 
     public Optional<User> validateUser(LoginDTO loginDTO){
-        System.out.println("Buscando usuário com ID: " + loginDTO.getId());
-        
-        // Debug: listar todos os usuários
-        var allUsers = userRepository.findAll();
-        System.out.println("Total de usuários na base: " + allUsers.size());
-        allUsers.forEach(u -> System.out.println("ID: " + u.getId() + ", Nome: " + u.getName()));
-        
-        Optional<User> user = userRepository.findById(loginDTO.getId());
-        System.out.println("Usuário encontrado: " + user.isPresent());
-        if (user.isPresent()) {
-            System.out.println("Nome do usuário: " + user.get().getName());
-        }
-        return user;
+        return userRepository.findById(loginDTO.getId());
     }
 
     public String generateToken(Integer id, Position position, Lab lab) {

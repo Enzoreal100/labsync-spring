@@ -48,7 +48,6 @@ public class AuthController {
         Optional<User> user = authService.validateUser(loginDTO);
         String passwordHash = user.isPresent() ? user.get().getPassword_hash() : authService.getFakeHash();
         
-        // Sempre executa a verificação de senha para evitar timing attacks
         boolean isValidPassword = authService.verifyPassword(loginDTO.getPassword(), passwordHash);
         
         if (user.isEmpty() || !isValidPassword) {
