@@ -28,6 +28,9 @@ public class AuthService {
     @Value("${jwt.expiration}")
     private long jwtExpiration;
 
+    @Value("${jwt.refresh-expiration}")
+    private long jwtRefreshExpiration;
+
     @Value("${jwt.fake-hash}")
     private String fakeHash;
 
@@ -39,6 +42,10 @@ public class AuthService {
         return userRepository.findById(loginDTO.getId());
     }
 
+    public Optional<User> findUserById(Integer id) {
+        return userRepository.findById(id);
+    }
+
     public String generateToken(Integer id, Position position, Lab lab) {
         return Jwts.builder()
                 .subject(id.toString())
@@ -46,6 +53,17 @@ public class AuthService {
                 .claim("labId", lab.getId())
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .signWith(getSigningKey())
+                .compact();
+    }
+
+    public String generateRefreshToken(Integer id, Position position, Lab lab) {
+        return Jwts.builder()
+                .subject(id.toString())
+                .claim("positionId", position.getId())
+                .claim("labId", lab.getId())
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + jwtRefreshExpiration))
                 .signWith(getSigningKey())
                 .compact();
     }

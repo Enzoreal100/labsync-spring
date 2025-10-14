@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dto.auth.LoginDTO;
+import com.dto.auth.RefreshTokenDTO;
 import com.entity.User;
 import com.service.AuthService;
 
@@ -57,10 +58,49 @@ public class AuthController {
         }
         
         String token = authService.generateToken(user.get().getId(), user.get().getPosition(), user.get().getLab());
-        
+        String refreshToken = authService.generateRefreshToken(user.get().getId(), user.get().getPosition(), user.get().getLab());
+
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
+        response.put("refreshToken", refreshToken);
         
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/refresh")
+    @Operation(summary = "Refresh token", description = "Refresh access and refresh tokens")
+    public ResponseEntity<Map<String, String>> refreshToken(@RequestBody @Valid RefreshTokenDTO refreshTokenDTO) {
+        String requestRefreshToken = refreshTokenDTO.getRefreshToken();
+
+        Integer userId = null;
+        try {
+            userId = authService.extractUserId(requestRefreshToken);
+        } catch (Exception e) {
+            // Malformed token or other JWT error
+        }
+
+        if (userId == null || !authService.isTokenValid(requestRefreshToken)) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", "Refresh token inválido ou expirado");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+        }
+
+        Optional<User> userOptional = authService.findUserById(userId);
+
+        if (userOptional.isEmpty()) {
+            Map<String, String> error = new HashMap<>();
+            error.put("message", "Usuário associado ao token não encontrado");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
+        }
+
+        User user = userOptional.get();
+        String newAccessToken = authService.generateToken(user.getId(), user.getPosition(), user.getLab());
+        String newRefreshToken = authService.generateRefreshToken(user.getId(), user.getPosition(), user.getLab());
+
+        Map<String, String> response = new HashMap<>();
+        response.put("token", newAccessToken);
+        response.put("refreshToken", newRefreshToken);
+
         return ResponseEntity.ok(response);
     }
 }
