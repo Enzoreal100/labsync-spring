@@ -36,14 +36,14 @@ public class UserController {
 
     @GetMapping
     @Operation(summary = "Get all users", description = "Retrieve a list of all users")
-    public ResponseEntity<List<UserDTO>> getAllUsers() {
+    public ResponseEntity<List<UserDTO>> getAllUsers(@RequestHeader("Authorization") String token) {
         List<UserDTO> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{cardCode}")
     @Operation(summary = "Get user by Card Code", description = "Retrieve a specific user by their card physical code")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable String cardCode) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable String cardCode, @RequestHeader("Authorization") String token) {
         return userService.getUserByCardCode(cardCode)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -51,7 +51,7 @@ public class UserController {
 
     @PostMapping
     @Operation(summary = "Create new user", description = "Create a new user")
-    public ResponseEntity<UserDTO> createUser(@RequestBody @Valid UserDTO userDTO) {
+    public ResponseEntity<UserDTO> createUser(@RequestBody @Valid UserDTO userDTO, @RequestHeader("Authorization") String token) {
             UserDTO createdUser = userService.createUser(userDTO);
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
