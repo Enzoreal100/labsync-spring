@@ -42,6 +42,10 @@ public class AuthService {
         return userRepository.findById(loginDTO.getId());
     }
 
+    public Optional<User> findUserById(Integer id) {
+        return userRepository.findById(id);
+    }
+
     public String generateToken(Integer id, Position position, Lab lab) {
         return Jwts.builder()
                 .subject(id.toString())
