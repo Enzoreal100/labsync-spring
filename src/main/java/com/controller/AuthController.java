@@ -57,9 +57,11 @@ public class AuthController {
         }
         
         String token = authService.generateToken(user.get().getId(), user.get().getPosition(), user.get().getLab());
-        
+        String refreshToken = authService.generateRefreshToken(user.get().getId(), user.get().getPosition(), user.get().getLab());
+
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
+        response.put("refreshToken", refreshToken);
         
         return ResponseEntity.ok(response);
     }
