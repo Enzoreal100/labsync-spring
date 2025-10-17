@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.dto.TakeDTO;
@@ -30,7 +30,7 @@ public class StockController {
 
     @GetMapping("/{labId}")
     @Operation(summary = "Get items available", description = "Get all the items available on the Lab")
-    public ResponseEntity<?> getAllItems(@PathVariable int labId, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> getAllItems(@PathVariable int labId, @RequestAttribute("jwtToken") String token) {
         if (labId <= 0) {
             return ResponseEntity.badRequest().body("labId deve ser um número inteiro maior que 0");
         }
@@ -39,7 +39,7 @@ public class StockController {
 
     @PostMapping("/take")
     @Operation(summary = "take items from stock", description = "take a batch of items from the stock")
-    public ResponseEntity<?> takeItemsFromStock(@org.springframework.web.bind.annotation.RequestBody @Valid TakeDTO takeData, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<?> takeItemsFromStock(@org.springframework.web.bind.annotation.RequestBody @Valid TakeDTO takeData, @RequestAttribute("jwtToken") String token) {
         return ResponseEntity.ok(stockService.takeItemsFromStock(takeData));
     }
 
