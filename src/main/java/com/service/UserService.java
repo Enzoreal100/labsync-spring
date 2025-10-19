@@ -68,4 +68,8 @@ public class UserService {
         String salt = BCrypt.gensalt();
         return BCrypt.hashpw(passoword, salt);
     }
+
+    public List<UserDTO> getUsersByLabId(Integer labId){
+        return userRepository.findUserByLabId(labId);
+    }
 }
