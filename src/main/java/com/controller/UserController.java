@@ -1,10 +1,13 @@
 package com.controller;
 
 import com.dto.UserDTO;
+import com.entity.User;
+import com.service.AuthService;
 import com.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.antlr.v4.runtime.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +27,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private AuthService authService;
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -52,12 +57,19 @@ public class UserController {
     @PostMapping
     @Operation(summary = "Create new user", description = "Create a new user")
     public ResponseEntity<UserDTO> createUser(@RequestBody @Valid UserDTO userDTO, @RequestAttribute("jwtToken") String token) {
-            UserDTO createdUser = userService.createUser(userDTO);
-            URI location = ServletUriComponentsBuilder
-                    .fromCurrentRequest()
-                    .path("")
-                    .buildAndExpand(createdUser.getId())
-                    .toUri();
-            return ResponseEntity.created(location).body(createdUser);
+        UserDTO createdUser = userService.createUser(userDTO);
+        URI location = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .path("")
+                .buildAndExpand(createdUser.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(createdUser);
+    }
+
+    @GetMapping("/labId")
+    @Operation(summary = "Get users by Lab ID")
+    public ResponseEntity<List<UserDTO>> getUsersByLabId(@RequestAttribute("jwtToken") String token) {
+        List<UserDTO> users = userService.getUsersByLabId(authService.extractLabId(token));
+        return ResponseEntity.ok(users);
     }
 }
