@@ -57,6 +57,10 @@ public class UserController {
     @PostMapping
     @Operation(summary = "Create new user", description = "Create a new user")
     public ResponseEntity<?> createUser(@RequestBody @Valid UserDTO userDTO, @RequestAttribute("jwtToken") String token) {
+        int requesterPosition = authService.extractPositionId(token);
+        if (requesterPosition > 2) {
+            return ResponseEntity.notFound().build();
+        }
         try {
             UserDTO createdUser = userService.createUser(userDTO);
             URI location = ServletUriComponentsBuilder
