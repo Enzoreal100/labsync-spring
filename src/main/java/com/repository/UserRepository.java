@@ -13,6 +13,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByCardCode(String cardCode);
+    Optional<User> findByEmail(String email);
     Optional<User> findById(Integer id);
     @Query("SELECT new com.dto.UserDTO(u.id, u.name, u.position.id, u.lab.id) FROM User u WHERE u.lab.id = :labId")
     List<UserDTO> findUserByLabId(@Param("labId") Integer labId);

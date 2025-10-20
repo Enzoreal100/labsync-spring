@@ -46,6 +46,13 @@ public class UserService {
 
     @Transactional
     public UserDTO createUser(UserDTO userDTO){
+        if (userRepository.findByCardCode(userDTO.getCardCode()).isPresent()) {
+            throw new IllegalArgumentException("Card code já existe");
+        }
+        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email já existe");
+        }
+        
         User user = convertFromDTO(userDTO);
         String hashedPassword = hashPassword(user.getPassword_hash());
         user.setPassword_hash(hashedPassword);
