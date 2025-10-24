@@ -27,10 +27,6 @@ public class OperationLogsController {
     @GetMapping
     @Operation(summary = "Get all logs", description = "Get all the logs")
     public ResponseEntity<?> getAllLogs(@RequestParam(required = false) Integer idLab, @RequestAttribute("jwtToken") String token){
-        int positionId = authService.extractPositionId(token);
-        if (positionId > 2){
-            return ResponseEntity.notFound().build();
-        }
         if (idLab == null){
             return ResponseEntity.ok(operationLogsService.findAll());
         }
