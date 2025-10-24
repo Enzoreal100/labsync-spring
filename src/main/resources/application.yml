@@ -1,0 +1,28 @@
+spring:
+  # Configuração do Banco de Dados
+  datasource:
+    url: ${DB_URL}
+    driver-class-name: ${DB_DRIVER}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  # Configuração do JPA (Hibernate)
+  jpa:
+    database-platform: ${JPA_DATABASE_PLATFORM}
+    hibernate:
+      ddl-auto: ${JPA_HIBERNATE_DDL_AUTO}
+    show-sql: ${JPA_SHOW_SQL}
+
+  # Configuração do Console H2 (se você usar em perfil 'dev')
+  h2:
+    console:
+      enabled: ${H2_CONSOLE_ENABLED}
+
+# Suas propriedades customizadas (ex: para JWT)
+# É uma boa prática agrupá-las
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-ms: ${JWT_EXPIRATION}
+    fake-hash: ${JWT_FAKE_HASH}
+    refresh-expiration-ms: ${JWT_REFRESH_EXPIRATION}
