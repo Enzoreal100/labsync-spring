@@ -28,7 +28,9 @@ jobs:
         with:
           java-version: ${{ env.JAVA_VERSION }}
           distribution: 'microsoft'
-
+      # fix permission denied
+      - name: Grant execute permission for mvnw
+        run: chmod +x ./mvnw
       # 3. Faz o build (um JAR padrão do Spring Boot, sem complicação)
       - name: 'Build with Maven'
         run: ./mvnw clean package -DskipTests
