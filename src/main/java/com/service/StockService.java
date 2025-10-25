@@ -6,12 +6,12 @@ import org.springframework.stereotype.Service;
 import com.dto.StockDTO;
 import com.dto.TakeDTO;
 import com.model.Stock;
-import com.dao.StockRepository;
+import com.dao.StockDAO;
 
 @Service
 public class StockService {
     @Autowired
-    private StockRepository stockRepository;
+    private StockDAO stockRepository;
 
 
     public List<StockDTO> getAllItems(int labId){

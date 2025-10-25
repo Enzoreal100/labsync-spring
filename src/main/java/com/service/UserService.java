@@ -4,9 +4,9 @@ import com.dto.UserDTO;
 import com.model.User;
 import com.model.Position;
 import com.model.Lab;
-import com.dao.UserRepository;
-import com.dao.PositionRepository;
-import com.dao.LabRepository;
+import com.dao.UserDAO;
+import com.dao.PositionDAO;
+import com.dao.LabDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserDAO userRepository;
 
     @Autowired
-    private PositionRepository positionRepository;
+    private PositionDAO positionRepository;
 
     @Autowired
-    private LabRepository labRepository;
+    private LabDAO labRepository;
 
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll().stream()
