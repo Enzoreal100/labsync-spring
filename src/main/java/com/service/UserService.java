@@ -38,10 +38,6 @@ public class UserService {
                 .map(this::convertToDTO);
     }
 
-    public User findById(int id){
-        return userRepository.findById(id).orElse(null);
-    }
-
     @Transactional
     public UserDTO createUser(UserDTO userDTO){
         User user = convertFromDTO(userDTO);

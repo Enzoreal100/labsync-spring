@@ -1,36 +1,48 @@
 package com.dto;
 
-import java.util.List;
-
 import jakarta.validation.constraints.Min;
 
 public class TakeDTO {
-    @Min(value = 1, message = "ID deve ser um número inteiro e positivo")
-    private int userId;
 
-    private List<TakeItemsDTO> items;
+    @Min(value = 1, message = "ID deve ser um número inteiro e positivo")
+    private int id;
+
+    @Min(value = 1, message = "Take quantity deve ser um número inteiro e positivo")
+    private int takeQuantity;
+
+    @Min(value = 1, message = "Lab ID deve ser um número inteiro e positivo")
+    private int labId;
 
     public TakeDTO() {
     }
 
-    public TakeDTO(int userId, List<TakeItemsDTO> items) {
-        this.userId = userId;
-        this.items = items;
+    public TakeDTO(int id, int takeQuantity, int labId) {
+        this.id = id;
+        this.takeQuantity = takeQuantity;
+        this.labId = labId;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getId() {
+        return id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public List<TakeItemsDTO> getItems() {
-        return items;
+    public int getTakeQuantity() {
+        return takeQuantity;
     }
 
-    public void setItems(List<TakeItemsDTO> items) {
-        this.items = items;
+    public void setTakeQuantity(int takeQuantity) {
+        this.takeQuantity = takeQuantity;
+    }
+
+    public int getLabId() {
+        return labId;
+    }
+
+    public void setLabId(int labId) {
+        this.labId = labId;
     }    
 }

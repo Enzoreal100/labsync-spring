@@ -1,1 +1,0 @@
-ALTER TABLE operation_logs DROP COLUMN quantity;
