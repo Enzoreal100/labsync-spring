@@ -94,47 +94,13 @@
 			<version>0.12.3</version>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-function-adapter-azure</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.microsoft.azure.functions</groupId>
-			<artifactId>azure-functions-java-library</artifactId>
-			<version>1.4.2</version>
-		</dependency>
 	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-function-dependencies</artifactId>
-				<version>3.2.9</version> <type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>com.microsoft.azure</groupId>
-				<artifactId>azure-functions-maven-plugin</artifactId>
-				<version>1.39.0</version>
-				<configuration>
-					<appName>labsync-api</appName>
-					<resourceGroup>labsync_group</resourceGroup>
-					<region>brazilsouth</region>
-					<runtime>
-						<os>linux</os>
-						<javaVersion>21</javaVersion>
-					</runtime>
-					<pricingTier>CONSUMPTION</pricingTier>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
