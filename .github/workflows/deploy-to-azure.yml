@@ -1,0 +1,58 @@
+name: Deploy Spring Boot to Azure App Service
+
+# Gatilho: rodar no push para a branch master (ou main)
+on:
+  push:
+    branches:
+      - dev
+
+env:
+  # -----------------------------------------------------------------
+  # MUDE AQUI para o nome do "Aplicativo Web" que você acabou de criar
+  # -----------------------------------------------------------------
+  AZURE_APP_NAME: 'labsync-app-service' 
+  JAVA_VERSION: '21'
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Baixa seu código
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+
+      # 2. Configura o Java 21
+      - name: 'Set up Java'
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'microsoft'
+
+      # 3. Faz o build (um JAR padrão do Spring Boot, sem complicação)
+      - name: 'Build with Maven'
+        run: ./mvnw clean package -DskipTests
+
+      # 4. Faz o login no Azure (usa o mesmo 'AZURE_CREDENTIALS' de antes)
+      - name: 'Login to Azure'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      # 5. Faz o deploy no App Service (note o 'webapps-deploy@v2')
+      - name: 'Deploy to Azure Web App'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_APP_NAME }}
+          
+          # ---------------------------------------------------------------
+          # VERIFIQUE ESTE NOME!
+          # Este deve ser o nome exato do JAR que o Maven cria na pasta 'target/'
+          # Verifique seu pom.xml (<artifactId> e <version>)
+          # ---------------------------------------------------------------
+          package: '${{ github.workspace }}/target/labsync-0.0.1-SNAPSHOT.jar'
+          
+      # 6. Logout
+      - name: 'Logout from Azure'
+        run: az logout
+        if: always()
