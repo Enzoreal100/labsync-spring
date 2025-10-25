@@ -1,12 +1,12 @@
 package com.service;
 
 import com.dto.UserDTO;
-import com.entity.User;
-import com.entity.Position;
-import com.entity.Lab;
-import com.repository.UserRepository;
-import com.repository.PositionRepository;
-import com.repository.LabRepository;
+import com.model.User;
+import com.model.Position;
+import com.model.Lab;
+import com.dao.UserRepository;
+import com.dao.PositionRepository;
+import com.dao.LabRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

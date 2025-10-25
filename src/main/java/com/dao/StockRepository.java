@@ -1,7 +1,7 @@
-package com.repository;
+package com.dao;
 
 import com.dto.StockDTO;
-import com.entity.Stock;
+import com.model.Stock;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

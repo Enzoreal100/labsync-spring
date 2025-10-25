@@ -1,6 +1,6 @@
-package com.repository;
+package com.dao;
 
-import com.entity.Position;
+import com.model.Position;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

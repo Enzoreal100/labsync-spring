@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.dto.StockDTO;
 import com.dto.TakeDTO;
-import com.entity.Stock;
-import com.repository.StockRepository;
+import com.model.Stock;
+import com.dao.StockRepository;
 
 @Service
 public class StockService {

@@ -1,4 +1,4 @@
-package com.entity;
+package com.model;
 
 import com.dto.ItemsLog;
 import jakarta.persistence.*;
