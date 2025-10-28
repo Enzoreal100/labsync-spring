@@ -60,4 +60,11 @@ public class UserController {
                     .toUri();
             return ResponseEntity.created(location).body(createdUser);
     }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete user by ID", description = "Delete a user by their ID")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
 }

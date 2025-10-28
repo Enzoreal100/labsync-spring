@@ -55,4 +55,8 @@ public class UserService {
         Lab lab = labRepository.findById(user.getLab());
         return new User(user.getName(), position, lab, user.getCardCode());
     }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
 }
