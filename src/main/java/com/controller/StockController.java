@@ -37,6 +37,9 @@ public class StockController {
     @PostMapping("/take")
     @Operation(summary = "take items from stock", description = "take a batch of items from the stock")
     public ResponseEntity<?> takeItemsFromStock(@org.springframework.web.bind.annotation.RequestBody @Valid List<TakeDTO> batch) {
+        if (batch == null || batch.isEmpty()) {
+            return ResponseEntity.badRequest().body("Lista de itens não pode estar vazia");
+        }
         return ResponseEntity.ok(stockService.takeItemsFromStock(batch));
     }
 }
